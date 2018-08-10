@@ -22,13 +22,11 @@
 	<div v-else>
 		<h3>Logged in as: {{username}}</h3>
 	</div>
-	<div v-if="game.status === 'initial' && game.players[username]">
+	<div v-if="game.status === 'initial' && game.players[username] && playerCount >= 2">
 		<button v-on:click="startGame" class="btn btn-primary btn-outline-secondary" type="button">Start game</button>
 	</div>
+	<button v-if="game.status !== 'initial'"  v-on:click="initGame" class="btn btn-primary btn-outline-secondary" type="button">Restart game</button>
 	<div v-if="showJoinButton">
-		<p>
-		Join game!
-		</p>
 		<button v-on:click="joinGame" class="btn btn-primary btn-outline-secondary" type="button">Join game</button>
 	</div>
 	<div v-if="loggedIn">
@@ -60,6 +58,10 @@
 			<td>Currently drawn card</td>
 			<td>{{game.shownCard || 'Please draw card'}}</td>
 			</tr>
+			</tr>
+			<td>Your coins</td>
+			<td>{{yourCoins}}</td>
+			</tr>
 		</table>
 		<table class="table table-xs table-striped xtable-dark">
 			<thead class="thead-dark">
@@ -75,9 +77,25 @@
 				</tr>
 			</tbody>
 		</table>
-		<button v-if="!game.shownCard && game.currentPlayer === username" v-on:click="drawCard" class="btn btn-primary btn-outline-secondary" type="button">Draw card</button>
+		<button v-if="game.status === 'started' && !game.shownCard && game.currentPlayer === username" v-on:click="drawCard" class="btn btn-primary btn-outline-secondary" type="button">Draw card</button>
 		<button v-if="game.shownCard && game.currentPlayer === username" v-on:click="passCard" class="btn btn-primary btn-outline-secondary" type="button">Pass</button>
 		<button v-if="game.shownCard && game.currentPlayer === username" v-on:click="takeCard" class="btn btn-primary btn-outline-secondary" type="button">Take card</button>
+		<table v-if="game.status === 'done'" class="table table-xs table-striped xtable-dark">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">Player</th>
+					<th scope="col">Score</th>
+					<th scope="col">Coins</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="(item, index) in game.score">
+					<td>{{index}}</td>
+					<td>{{item}}</td>
+					<td>{{game.players[index].coins}}</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </div>
 

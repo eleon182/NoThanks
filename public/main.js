@@ -10,6 +10,8 @@ new Vue({
 		players: '',
 		username: null,
 		usernameInput: null,
+		playerCount: 0,
+		yourCoins: 0,
 		game: {}
 	},
 	//watch: {
@@ -19,7 +21,7 @@ new Vue({
 	//}
 	//},
 	mounted: function() {
-		setInterval(this.loadGame, 5000);
+		setInterval(this.loadGame, 500);
 	},
 	methods: {
 		login: function() {
@@ -37,6 +39,29 @@ new Vue({
 					self.players = self.game.playerOrder.toString();
 					self.detectWatchMode();
 					self.checkJoinMode();
+					self.calculateOwnCoins();
+					self.playerCount = 0;
+					for (var key in self.game.players) {
+						self.playerCount++;
+					}
+				})
+				.catch(function(error) {
+					console.log(error);
+				})
+		},
+		calculateOwnCoins: function() {
+			this.yourCoins = 0;
+			for(var key in this.game.players) {
+				if(this.username === key) {
+					this.yourCoins = this.game.players[key].coins;
+				}
+			}
+		},
+		initGame: function() {
+			var self = this;
+			axios.post('/game/init', {})
+				.then(function(response) {
+					console.log('Initialized game');
 				})
 				.catch(function(error) {
 					console.log(error);

@@ -64,6 +64,9 @@ function takeTurn(name, action) {
 		game.pot = 0;
 		game.shownCard = false;
 		nextPlayer();
+		if (game.deck.length === 0) {
+			endGame();
+		}
 		return false;
 	}
 
@@ -140,10 +143,6 @@ function draw(user) {
 }
 
 function initGame() {
-	if (game && game.status !== 'done') {
-		return 'gameNotDone';
-	}
-
 	game = {
 		players: {},
 		deck: initNewDeck(),
@@ -186,7 +185,7 @@ function startGame() {
 function initNewDeck() {
 	var resp = [];
 
-	for (var i = 3; i <= 5; i++) {
+	for (var i = 3; i <= 35; i++) {
 		resp.push(i);
 	}
 	return shuffle(resp);

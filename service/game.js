@@ -12,6 +12,7 @@ module.exports = {
 
 var game;
 initGame();
+
 function getGame() {
 	return {
 		players: game.players,
@@ -35,8 +36,8 @@ function takeTurn(name, action) {
 		return 'wrongPlayer';
 	}
 
-	if(!game.shownCard) {
-		return 'noCardDraw'; 
+	if (!game.shownCard) {
+		return 'noCardDraw';
 	}
 
 	if (!game.players[name]) {
@@ -62,6 +63,7 @@ function takeTurn(name, action) {
 		game.players[name].coins += game.pot;
 		game.pot = 0;
 		game.shownCard = false;
+		nextPlayer();
 		return false;
 	}
 
@@ -76,11 +78,15 @@ function nextPlayer() {
 }
 
 function endGame() {
-	game.score = calculateScore();
 	game.status = 'done';
+	game.score = calculateScore();
 }
 
 function calculateScore() {
+	if (game.status !== 'done') {
+		return {};
+	}
+
 	var response = {};
 	var players = game.players;
 	for (var key in players) {
@@ -108,10 +114,11 @@ function calculateIndividualScore(player) {
 
 function draw(user) {
 	if (game.deck.length <= 0) {
-		return endGame();
+		endGame();
+		return 'gameEnded';
 	}
 
-	if (!game.status === 'initial') {
+	if (game.status === 'initial') {
 		return 'gameNotStarted';
 	}
 
@@ -129,7 +136,7 @@ function draw(user) {
 
 	game.shownCard = lo.take(game.deck)[0];
 	game.deck = lo.tail(game.deck);
-	return game.shownCard;
+	return false;
 }
 
 function initGame() {
@@ -170,7 +177,7 @@ function startGame() {
 	game.turn = 1;
 	game.currentPlayer = 0;
 	console.log('Current player:', game.playerOrder[0]);
-	game.started = 'started';
+	game.status = 'started';
 	console.log('Starting game, turn 1');
 
 	return false;

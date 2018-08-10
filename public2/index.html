@@ -1,0 +1,104 @@
+<script src="vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script src="https://unpkg.com/vuex"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+
+
+<div id="no-thanks">
+	<div v-if="watchMode">
+		<p>
+		Spectator mode, game in progress
+		</p>
+	</div>
+	<div v-if="!loggedIn">
+		<p>
+		Enter username
+		<input v-model="usernameInput">
+		</p>
+		<button v-on:click="login" class="btn btn-primary btn-outline-secondary" type="button">Submit</button>
+	</div>
+	<div v-else>
+		<h3>Logged in as: {{username}}</h3>
+	</div>
+	<div v-if="game.status === 'initial' && game.players[username] && playerCount >= 2">
+		<button v-on:click="startGame" class="btn btn-primary btn-outline-secondary" type="button">Start game</button>
+	</div>
+	<button v-if="game.status !== 'initial'"  v-on:click="initGame" class="btn btn-primary btn-outline-secondary" type="button">Restart game</button>
+	<div v-if="showJoinButton">
+		<button v-on:click="joinGame" class="btn btn-primary btn-outline-secondary" type="button">Join game</button>
+	</div>
+	<div v-if="loggedIn">
+		<table style="width:50%">
+			<tr>
+				<td>Cards remainging</td>
+				<td>{{game.remainingCards}}</td>
+			</tr>
+			<tr>
+				<td>Coins in pot</td>
+				<td>{{game.pot}}</td>
+			</tr>
+			<tr>
+				<td>Game status</td>
+				<td>{{game.status}}</td>
+			</tr>
+			<tr>
+				<td>Turn number</td>
+				<td>{{game.turn}}</td>
+			</tr>
+			<tr>
+				<td>Current player</td>
+				<td>{{game.currentPlayer}}</td>
+			</tr>
+			<td>Players </td>
+			<td>{{players}}</td>
+			</tr>
+			</tr>
+			<td>Currently drawn card</td>
+			<td>{{game.shownCard || 'Please draw card'}}</td>
+			</tr>
+			</tr>
+			<td>Your coins</td>
+			<td>{{yourCoins}}</td>
+			</tr>
+		</table>
+		<table class="table table-xs table-striped xtable-dark">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">Player</th>
+					<th scope="col">Cards</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="item in game.players">
+					<td>{{item.name}}</td>
+					<td>{{item.cards.toString()}}</td>
+				</tr>
+			</tbody>
+		</table>
+		<button v-if="game.status === 'started' && !game.shownCard && game.currentPlayer === username" v-on:click="drawCard" class="btn btn-primary btn-outline-secondary" type="button">Draw card</button>
+		<button v-if="game.shownCard && game.currentPlayer === username" v-on:click="passCard" class="btn btn-primary btn-outline-secondary" type="button">Pass</button>
+		<button v-if="game.shownCard && game.currentPlayer === username" v-on:click="takeCard" class="btn btn-primary btn-outline-secondary" type="button">Take card</button>
+		<table v-if="game.status === 'done'" class="table table-xs table-striped xtable-dark">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">Player</th>
+					<th scope="col">Score</th>
+					<th scope="col">Coins</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="(item, index) in game.score">
+					<td>{{index}}</td>
+					<td>{{item}}</td>
+					<td>{{game.players[index].coins}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<script >var myapp = {};</script>
+
+<script src="main.js"></script>

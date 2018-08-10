@@ -1,0 +1,257 @@
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script src="https://unpkg.com/vuex"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+
+<div id="mainapp">
+
+    <h1>Hello App!</h1>
+
+    <p>
+
+        <!-- use router-link component for navigation. -->
+
+        <!-- specify the link by passing the `to` prop. -->
+
+        <!-- `<router-link>` will be rendered as an `<a>` tag by default -->
+
+        <router-link to="/foo">Go to Foo</router-link>
+
+        <router-link to="/bar">Go to Bar</router-link>
+
+    </p>
+
+    <!-- route outlet -->
+
+    <!-- component matched by the route will render here -->
+
+    <router-view></router-view>
+
+</div>
+
+
+
+<div id="app">
+
+    {{ message }}
+
+</div>
+
+
+
+<div id="app-2">
+
+    <span v-bind:title="message">
+
+        Hover your mouse over me for a few seconds to see my dynamically bound title!
+
+    </span>
+
+</div>
+
+
+
+<div id="app-3">
+
+    <span v-if="seen">Now you see me</span>
+
+</div>
+
+
+
+<div id="app-4">
+
+    <ol>
+
+        <li v-for="todo in todos">
+
+            {{ todo.text }}
+
+        </li>
+
+    </ol>
+
+</div>
+
+
+
+<div id="app-5">
+
+    <p>{{ message }}</p>
+
+    <button v-on:click="reverseMessage">{{now}} Reverse Message</button>
+
+</div>
+
+
+
+<div id="app-6">
+
+    <p>{{ message }}</p>
+
+    <input v-model="message">
+
+</div>
+
+
+
+
+
+<ol>
+
+    <!-- Create an instance of the todo-item component -->
+
+    <todo-item></todo-item>
+
+</ol>
+
+<div id="app-17">
+
+
+
+    <select v-model="selected">
+
+        <option v-for="option in options" v-bind:value="option.value">
+
+            {{ option.text }}
+
+        </option>
+
+    </select>
+
+    <span>Selected: {{ selected }}</span>
+
+</div>
+
+
+
+<div id="app-7">
+
+    <div class="static" v-bind:class="{ active: isActive, 'text-danger': hasError }">
+
+        active or not
+
+    </div>
+
+    <h1 v-if="ok">Yes</h1>
+
+    <h1 v-else>No</h1>
+
+
+
+    <div v-if="type === 'A'">
+
+        A
+
+    </div>
+
+    <div v-else-if="type === 'B'">
+
+        B
+
+    </div>
+
+    <div v-else-if="type === 'C'">
+
+        C
+
+    </div>
+
+    <div v-else>
+
+        Not A/B/C
+
+    </div>
+
+    <div v-for="(value, key, index) in object">
+
+        {{ index }}. {{ key }}: {{ value }}
+
+    </div>
+
+    <ul id="example-2">
+
+        <li v-for="(item, index) in items">
+
+            {{ parentMessage }} - {{ index }} - {{ item.message }}
+
+        </li>
+
+    </ul>
+
+    <div v-bind:class="[activeClass, errorClass]"></div>
+
+    <ol>
+
+        <!--
+
+      Now we provide each todo-item with the todo object
+
+      it's representing, so that its content can be dynamic.
+
+      We also need to provide each component with a "key",
+
+      which will be explained later.
+
+    -->
+
+        <todo-item v-for="item in groceryList" v-bind:todo="item" v-bind:key="item.id">
+
+        </todo-item>
+
+    </ol>
+
+</div>
+
+
+
+
+
+<div id="watch-example">
+
+    <p>
+
+        Ask a yes/no question:
+
+        <input v-model="question">
+
+    </p>
+
+    <p>{{ answer }}</p>
+
+</div>
+
+
+
+
+
+
+
+<div id="counter-event-example">
+
+    <p>{{ total }}</p>
+
+    <button-counter v-on:increment="incrementTotal"></button-counter>
+
+    <button-counter v-on:increment="incrementTotal"></button-counter>
+
+</div>
+
+
+
+<div id="app-22">
+
+
+
+    <component v-bind:is="currentView">
+
+        <!-- component changes when vm.currentView changes! -->
+
+    </component>
+
+</div>
+
+<script >var myapp = {};</script>
+<script src="backup.js"></script>

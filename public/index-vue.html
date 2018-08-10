@@ -1,0 +1,33 @@
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script src="https://unpkg.com/vuex"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+
+<div id="app-4">
+	<ol>
+		<li v-for="todo in todos">
+			{{ todo.text }}
+		</li>
+	</ol>
+</div>
+
+<div id="app-5">
+	<p>{{ message }}</p>
+	<button v-on:click="reverseMessage">{{now}} Reverse Message</button>
+</div>
+
+<div id="search-grid">
+	<p>
+	Search
+	<input v-model="searchPhrase">
+	</p>
+	<p>{{ message }}</p>
+	<ol>
+		<li v-for="item in list">
+			{{ item.assetId }}
+		</li>
+	</ol>
+</div>
+
+<script src="frontend.js"></script>

@@ -9,10 +9,11 @@
 		<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
 		<!-- Title  -->
-		<title>NT 1.0</title>
+		<title>VFM 3.0</title>
 
 		<!-- Favicon  -->
 		<link rel="icon" href="img/core-img/favicon.ico">
+
 		<!-- Style CSS -->
 		<link rel="stylesheet" href="style.css">
 
@@ -27,7 +28,6 @@
 		</div>
 		<!-- Preloader End -->
 
-		<div id="no-thanks">
 		<!-- ***** Header Area Start ***** -->
 		<header class="header-area">
 			<div class="container">
@@ -35,26 +35,31 @@
 					<div class="col-12">
 						<nav class="navbar navbar-expand-lg">
 							<!-- Logo -->
-							<a class="nav-link" href="#">No Thanks 1.0<span class="sr-only">(current)</span></a>
-							<div v-if="username" class="nav-item">
-								- Logged in as {{username}}
-							</div>
+							<a class="nav-link" href="#">Vehicle Finance Modern 3.0<span class="sr-only">(current)</span></a>
 							<!-- Navbar Toggler -->
 							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#worldNav" aria-controls="worldNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
 							<!-- Navbar -->
 							<div class="collapse navbar-collapse" id="worldNav">
 								<ul class="navbar-nav ml-auto">
-									<li class="nav-item" v-if="game.status === 'initial' && game.players[username] && playerCount >= 2">
-										<button v-on:click="startGame" class="btn btn-primary btn-outline-secondary" type="button">Start game</button>
+									<li class="nav-item">
+										<a class="nav-link" href="#">Dashboard<span class="sr-only">(current)</span></a>
 									</li>
-									<li class="nav-item" v-if="game.status !== 'initial'">
-										<button v-on:click="initGame" class="btn btn-danger btn-outline-secondary" type="button">Restart game</button>
+									<li class="nav-item xactive">
+										<a class="nav-link" href="#">Vehicles</a>
 									</li>
-									<li class="nav-item" v-if="showJoinButton">
-										<button v-on:click="joinGame" class="btn btn-primary btn-outline-secondary" type="button">Join game</button>
+									<li class="nav-item">
+										<a class="nav-link" href="#">Reports</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="#">Alerts</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="#">Admin</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="#">Sales</a>
 									</li>
 								</ul>
-
 								<!-- Search Form  -->
 								<div id="search-wrapper">
 									<form action="#">
@@ -86,85 +91,121 @@
 		</div>
 		<!-- ********** Hero Area End ********** -->
 
-		<div id="" class="main-content-wrapper section-padding-100">
+		<div class="main-content-wrapper section-padding-100">
 
 			<div class="container">
 				<div class="row">
-					<div v-if="!username" class="col-12" id="">
+					<div class="col-12">
 						<div class="jumbotron">
-							<h1 class="display-8">Login</h1>
-							<p class="lead">Enter username</p>
+							<h1 class="display-8">Trigger ingestion</h1>
+							<p class="lead">Populate app view service from platform core domains</p>
 							<hr class="my-4">
 							<div class="input-group mb-3 row col-8">
-								<input type="text" v-model="usernameInput" class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="basic-addon2">
+								<input type="number" class="form-control" placeholder="Count" aria-label="Recipient's username" aria-describedby="basic-addon2">
 								<div class="input-group-append">
-									<button v-on:click="login" class="btn btn-primary btn-outline-secondary" type="button">Submit</button>
+									<button class="btn btn-primary btn-outline-secondary" type="button">Submit</button>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div v-if="username" class="col-12" id="">
+					<div class="col-12">
 						<div class="jumbotron">
-							<h1 class="display-8">Game data</h1>
-							<p class="lead"></p>
+							<h1 class="display-8">Updates testing</h1>
+							<p class="lead">Trigger updates for a given vehicle</p>
 							<hr class="my-4">
-							<div id="xsearch-grid">
-								<table class="table table-xs table-striped xtable-dark">
-									<thead class="thead-dark">
-										<!--<tr>-->
-											<!--<th scope="col">Asset ID</th>-->
-											<!--<th scope="col">Device ID</th>-->
-											<!--<th scope="col">Name</th>-->
-											<!--<th scope="col">VIN</th>-->
-											<!--<th scope="col">Serial Number</th>-->
-										<!--</tr>-->
+							<div class="input-group mb-3 row col-8">
+								<input type="text" class="form-control" placeholder="Asset ID" aria-label="Recipient's username" aria-describedby="basic-addon2">
+								<div class="input-group-append">
+									<button class="btn btn-primary btn-outline-secondary" type="button">Load asset</button>
+								</div>
+							</div>
+							<label class="col-8" for="basic-url">Asset Details</label>
+
+							<div class="input-group mb-3 row col-8">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="basic-addon1">Device ID</span>
+								</div>
+								<input type="text" class="form-control" placeholder="10000" aria-label="Username" aria-describedby="basic-addon1">
+							</div>
+							<div class="input-group mb-3 row col-8">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="basic-addon1">VIN</span>
+								</div>
+								<input type="text" class="form-control" placeholder="10000" aria-label="Username" aria-describedby="basic-addon1">
+							</div>
+							<div class="input-group mb-3 row col-8">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="basic-addon1">Serial Number</span>
+								</div>
+								<input type="text" class="form-control" placeholder="10000" aria-label="Username" aria-describedby="basic-addon1">
+							</div>
+							<p class="lead">
+							<a class="btn btn-primary btn-md" href="#" role="button">Trigger update</a>
+							</p>
+						</div>
+					</div>
+					<div class="col-12">
+						<div class="jumbotron">
+							<h1 class="display-8">Searching</h1>
+							<p class="lead">Term searching by serial number, vin, etc..</p>
+							<hr class="my-4">
+							<div class="input-group mb-3 row col-8">
+								<input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
+								<div class="input-group-append">
+									<button class="btn btn-primary btn-outline-secondary" type="button">Submit</button>
+								</div>
+							</div>
+							<table class="table table-sm table-striped xtable-dark">
+								<thead class="thead-dark">
+									<tr>
+										<th scope="col">#</th>
+
+										<th scope="col">First</th>
+
+										<th scope="col">Last</th>
+
+										<th scope="col">Handle</th>
+									</tr>
 								</thead>
+
+
 								<tbody>
-									<!--<tr v-for="item in list">-->
-										<!--<td>{{item.assetId}}</td>-->
-										<!--<td>{{item.deviceId}}</td>-->
-										<!--<td>{{item.assetName}}</td>-->
-										<!--<td>{{item.vin}}</td>-->
-										<!--<td>{{item.serialNumber}}</td>-->
-										<!--</tr>-->
-										<tr>
-										<td>Cards remainging</td>
-										<td>{{game.remainingCards}}</td>
-									</tr>
 									<tr>
-										<td>Coins in pot</td>
-										<td>{{game.pot}}</td>
+										<th scope="row">1</th>
+
+										<td>Mark</td>
+
+										<td>Otto</td>
+
+										<td>@mdo</td>
 									</tr>
+
+
 									<tr>
-										<td>Game status</td>
-										<td>{{game.status}}</td>
+										<th scope="row">2</th>
+
+										<td>Jacob</td>
+
+										<td>Thornton</td>
+
+										<td>@fat</td>
 									</tr>
+
+
 									<tr>
-										<td>Turn number</td>
-										<td>{{game.turn}}</td>
-									</tr>
-									<tr>
-										<td>Current player</td>
-										<td>{{game.currentPlayer}}</td>
-									</tr>
-									<td>Players </td>
-									<td>{{players}}</td>
-									</tr>
-									</tr>
-									<td>Currently drawn card</td>
-									<td>{{game.shownCard || 'Please draw card'}}</td>
-									</tr>
-									</tr>
-									<td>Your coins</td>
-									<td>{{yourCoins}}</td>
+										<th scope="row">3</th>
+
+										<td>Larry</td>
+
+										<td>the Bird</td>
+
+										<td>@twitter</td>
 									</tr>
 								</tbody>
-								</table>
-							</div>
+							</table>
 						</div>
 					</div>
 				</div>
-			</div>
 			</div>
 		</div>
 
@@ -207,6 +248,7 @@
 			</div>
 		</footer>
 		<!-- ***** Footer Area End ***** -->
+
 		<!-- jQuery (Necessary for All JavaScript Plugins) -->
 		<script src="js/jquery/jquery-2.2.4.min.js"></script>
 		<!-- Popper js -->
@@ -218,14 +260,6 @@
 		<!-- Active js -->
 		<script src="js/active.js"></script>
 
-
-		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
-		<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
-		<script src="https://unpkg.com/vuex"></script>
-		<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
-		<script src="frontend.js"></script>
 	</body>
 
 </html>

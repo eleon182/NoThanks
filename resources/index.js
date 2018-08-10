@@ -11,13 +11,16 @@ var app = express();
 var port;
 var server = http.createServer(app);
 
+var game = require('./game.route');
+
+
 module.exports = {
 	init: init,
 };
 
-function loadResources(app) {
+function loadResources() {
 	// register new routes here
-	//app.use('/webhook', webhook);
+	app.use('/game', game);
 }
 
 function init(cb) {
@@ -32,6 +35,8 @@ function init(cb) {
 
 	app.use(morgan('dev'));
 
+	loadResources();
+	
 	// catch 404 and forward to error handler
 	app.use(function(req, res, next) {
 		var err = new Error('Not Found');
@@ -50,6 +55,7 @@ function init(cb) {
 		res.json(err);
 	});
 
+	
 	startWebService(cb);
 }
 

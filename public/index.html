@@ -1,0 +1,29 @@
+<script src="vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script src="https://unpkg.com/vuex"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+
+
+<div id="no-thanks">
+	<div v-if="watchMode">
+		<p>
+		Spectator mode, game in progress
+		</p>
+	</div>
+	<div v-if="!loggedIn">
+		<p>
+		Enter username
+		<input v-model="username">
+		</p>
+		<button v-on:click="login" class="btn btn-primary btn-outline-secondary" type="button">Submit</button>
+	</div>
+	<div v-else>
+		Not A/B/C
+	</div>
+</div>
+
+<script >var myapp = {};</script>
+
+<script src="main.js"></script>

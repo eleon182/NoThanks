@@ -1,33 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<meta charset="UTF-8">
-		<meta name="description" content="">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<head>
+	<meta charset="UTF-8">
+	<meta name="description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-		<!-- Title  -->
-		<title>NT 1.0</title>
+	<!-- Title  -->
+	<title>NT 1.0</title>
 
-		<!-- Favicon  -->
-		<link rel="icon" href="img/core-img/favicon.ico">
-		<!-- Style CSS -->
-		<link rel="stylesheet" href="style.css">
+	<!-- Favicon  -->
+	<link rel="icon" href="img/core-img/favicon.ico">
+	<!-- Style CSS -->
+	<link rel="stylesheet" href="style.css">
+	<link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+	<link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
 
-	</head>
+</head>
 
-	<body>
-		<!-- Preloader Start -->
-		<div id="preloader">
-			<div class="preload-content">
-				<div id="world-load"></div>
-			</div>
+<body>
+	<!-- Preloader Start -->
+	<div id="preloader">
+		<div class="preload-content">
+			<div id="world-load"></div>
 		</div>
-		<!-- Preloader End -->
+	</div>
+	<!-- Preloader End -->
 
-		<div id="no-thanks">
+	<div id="no-thanks">
 		<!-- ***** Header Area Start ***** -->
 		<header class="header-area">
 			<div class="container">
@@ -35,12 +37,17 @@
 					<div class="col-12">
 						<nav class="navbar navbar-expand-lg">
 							<!-- Logo -->
-							<a class="nav-link" href="#">No Thanks 1.0<span class="sr-only">(current)</span></a>
+							<a class="nav-link" href="#">No Thanks 1.0
+								<span class="sr-only">(current)</span>
+							</a>
 							<div v-if="username" class="nav-item">
 								- Logged in as {{username}}
 							</div>
 							<!-- Navbar Toggler -->
-							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#worldNav" aria-controls="worldNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#worldNav" aria-controls="worldNav" aria-expanded="false"
+							 aria-label="Toggle navigation">
+								<span class="navbar-toggler-icon"></span>
+							</button>
 							<!-- Navbar -->
 							<div class="collapse navbar-collapse" id="worldNav">
 								<ul class="navbar-nav ml-auto">
@@ -91,6 +98,7 @@
 			<div class="container">
 				<div class="row">
 					<div v-if="!username" class="col-12" id="">
+
 						<div class="jumbotron">
 							<h1 class="display-8">Login</h1>
 							<p class="lead">Enter username</p>
@@ -105,6 +113,44 @@
 					</div>
 					<div v-if="username" class="col-12" id="">
 						<div class="jumbotron">
+							<h1 class="display-8">Players</h1>
+							<p class="lead"></p>
+							<hr class="my-4">
+							<b-alert v-if="game.shownCard" variant="secondary" show>Drawn card: {{game.shownCard || 'No card drawn'}}</b-alert>
+							<b-alert v-if="game.pot" variant="warning" show>Coins in pot: {{game.pot}}</b-alert>
+							<b-alert v-if="yourCoins" variant="info" show>Your coins: {{yourCoins}}</b-alert>
+							<b-alert v-if="game.status === 'done'" variant="success" show>Winner is: {{winner}}</b-alert>
+
+							<div id="">
+								<table class="table table-xs table-striped xtable-dark">
+									<thead class="thead-dark">
+										<tr>
+											<th scope="col">Player</th>
+											<th scope="col">Cards</th>
+											<th scope="col">Score</th>
+										</tr>
+
+									</thead>
+									<tbody>
+										<tr v-for="item in game.players">
+											<td>
+												<span v-if="item.name !== game.currentPlayer" class="">{{item.name}}</span>
+												<span v-if="item.name === game.currentPlayer" class="badge badge-success">{{item.name}}</span>
+											</td>
+											<td>{{item.cards.toString()}}</td>
+											<td>{{game.score[item.name]}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<button v-if="game.status === 'started' && !game.shownCard && game.currentPlayer === username" v-on:click="drawCard" class="btn btn-info"
+							 type="button">Draw card</button>
+							<button v-if="game.shownCard && game.currentPlayer === username && yourCoins > 0" v-on:click="passCard" class="btn btn-warning" type="button">Pass</button>
+							<button v-if="game.shownCard && game.currentPlayer === username" v-on:click="takeCard" class="btn btn-primary" type="button">Take card</button>
+						</div>
+					</div>
+					<div v-if="username" class="col-12" id="">
+						<div class="jumbotron">
 							<h1 class="display-8">Game data</h1>
 							<p class="lead"></p>
 							<hr class="my-4">
@@ -112,15 +158,15 @@
 								<table class="table table-xs table-striped xtable-dark">
 									<thead class="thead-dark">
 										<!--<tr>-->
-											<!--<th scope="col">Asset ID</th>-->
-											<!--<th scope="col">Device ID</th>-->
-											<!--<th scope="col">Name</th>-->
-											<!--<th scope="col">VIN</th>-->
-											<!--<th scope="col">Serial Number</th>-->
+										<!--<th scope="col">Asset ID</th>-->
+										<!--<th scope="col">Device ID</th>-->
+										<!--<th scope="col">Name</th>-->
+										<!--<th scope="col">VIN</th>-->
+										<!--<th scope="col">Serial Number</th>-->
 										<!--</tr>-->
-								</thead>
-								<tbody>
-									<!--<tr v-for="item in list">-->
+									</thead>
+									<tbody>
+										<!--<tr v-for="item in list">-->
 										<!--<td>{{item.assetId}}</td>-->
 										<!--<td>{{item.deviceId}}</td>-->
 										<!--<td>{{item.assetName}}</td>-->
@@ -128,104 +174,127 @@
 										<!--<td>{{item.serialNumber}}</td>-->
 										<!--</tr>-->
 										<tr>
-										<td>Cards remainging</td>
-										<td>{{game.remainingCards}}</td>
-									</tr>
-									<tr>
-										<td>Coins in pot</td>
-										<td>{{game.pot}}</td>
-									</tr>
-									<tr>
-										<td>Game status</td>
-										<td>{{game.status}}</td>
-									</tr>
-									<tr>
-										<td>Turn number</td>
-										<td>{{game.turn}}</td>
-									</tr>
-									<tr>
-										<td>Current player</td>
-										<td>{{game.currentPlayer}}</td>
-									</tr>
-									<td>Players </td>
-									<td>{{players}}</td>
-									</tr>
-									</tr>
-									<td>Currently drawn card</td>
-									<td>{{game.shownCard || 'Please draw card'}}</td>
-									</tr>
-									</tr>
-									<td>Your coins</td>
-									<td>{{yourCoins}}</td>
-									</tr>
-								</tbody>
+											<td>Cards remainging</td>
+											<td>
+												<b-progress :value="game.remainingCards" :max="33" show-value animated></b-progress>
+											</td>
+										</tr>
+										<tr>
+											<td>Coins in pot</td>
+											<td>{{game.pot}}</td>
+										</tr>
+										<tr>
+											<td>Game status</td>
+											<td>{{game.status}}</td>
+										</tr>
+										<tr>
+											<td>Turn number</td>
+											<td>{{game.turn}}</td>
+										</tr>
+										<tr>
+											<td>Current player</td>
+											<td>{{game.currentPlayer}}</td>
+										</tr>
+										<td>Players </td>
+										<td>{{players}}</td>
+										</tr>
+										</tr>
+										<td>Currently drawn card</td>
+										<td>{{game.shownCard || 'None'}}</td>
+										</tr>
+										</tr>
+										<td>Your coins</td>
+										<td>{{yourCoins}}</td>
+										</tr>
+									</tbody>
 								</table>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			</div>
 		</div>
+	</div>
 
-		<!-- ***** Footer Area Start ***** -->
-		<footer class="footer-area">
-			<div class="container">
-				<div class="row">
-					<div class="col-12 col-md-4">
-						<div class="footer-single-widget">
-							steve
-							<div class="copywrite-text mt-30">
-								<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-								Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Tiny Dancers</a>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-							</div>
-						</div>
-					</div>
-					<div class="col-12 col-md-4">
-						<div class="footer-single-widget">
-							<ul class="footer-menu d-flex justify-content-between">
-								<li><a href="#">Dashboard</a></li>
-								<li><a href="#">Vehicles</a></li>
-								<li><a href="#">Reports</a></li>
-								<li><a href="#">Alerts</a></li>
-								<li><a href="#">Admin</a></li>
-								<li><a href="#">Sales</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-12 col-md-4">
-						<div class="footer-single-widget">
-							<h5>Subscribe</h5>
-							<form action="#" method="post">
-								<input type="email" name="email" id="email" placeholder="Enter your mail">
-								<button type="button"><i class="fa fa-arrow-right"></i></button>
-							</form>
+	<!-- ***** Footer Area Start ***** -->
+	<footer class="footer-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 col-md-4">
+					<div class="footer-single-widget">
+						steve
+						<div class="copywrite-text mt-30">
+							<p>
+								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+								Copyright &copy;
+								<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with
+								<i class="fa fa-heart-o" aria-hidden="true"></i> by
+								<a href="https://colorlib.com" target="_blank">Tiny Dancers</a>
+								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							</p>
 						</div>
 					</div>
 				</div>
+				<div class="col-12 col-md-4">
+					<div class="footer-single-widget">
+						<ul class="footer-menu d-flex justify-content-between">
+							<li>
+								<a href="#">Dashboard</a>
+							</li>
+							<li>
+								<a href="#">Vehicles</a>
+							</li>
+							<li>
+								<a href="#">Reports</a>
+							</li>
+							<li>
+								<a href="#">Alerts</a>
+							</li>
+							<li>
+								<a href="#">Admin</a>
+							</li>
+							<li>
+								<a href="#">Sales</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-12 col-md-4">
+					<div class="footer-single-widget">
+						<h5>Subscribe</h5>
+						<form action="#" method="post">
+							<input type="email" name="email" id="email" placeholder="Enter your mail">
+							<button type="button">
+								<i class="fa fa-arrow-right"></i>
+							</button>
+						</form>
+					</div>
+				</div>
 			</div>
-		</footer>
-		<!-- ***** Footer Area End ***** -->
-		<!-- jQuery (Necessary for All JavaScript Plugins) -->
-		<script src="js/jquery/jquery-2.2.4.min.js"></script>
-		<!-- Popper js -->
-		<script src="js/popper.min.js"></script>
-		<!-- Bootstrap js -->
-		<script src="js/bootstrap.min.js"></script>
-		<!-- Plugins js -->
-		<script src="js/plugins.js"></script>
-		<!-- Active js -->
-		<script src="js/active.js"></script>
+		</div>
+	</footer>
+	<!-- ***** Footer Area End ***** -->
+	<!-- jQuery (Necessary for All JavaScript Plugins) -->
+	<script src="js/jquery/jquery-2.2.4.min.js"></script>
+	<!-- Popper js -->
+	<script src="js/popper.min.js"></script>
+	<!-- Bootstrap js -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Plugins js -->
+	<script src="js/plugins.js"></script>
+	<!-- Active js -->
+	<script src="js/active.js"></script>
 
 
-		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
-		<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
-		<script src="https://unpkg.com/vuex"></script>
-		<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
-		<script src="frontend.js"></script>
-	</body>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+	<script src="https://unpkg.com/vuex"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+	<script src="frontend.js"></script>
+	<script src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+	<script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+</body>
 
 </html>

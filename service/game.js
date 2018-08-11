@@ -59,7 +59,7 @@ function takeTurn(name, action) {
 	if (action === 'take') {
 		game.turn++;
 		game.players[name].cards.push(game.shownCard);
-		game.players[name].cards = game.players[name].cards.sort();
+		game.players[name].cards.sort(function(a, b){return a - b});
 		game.players[name].coins += game.pot;
 		game.pot = 0;
 		game.shownCard = false;
@@ -86,10 +86,6 @@ function endGame() {
 }
 
 function calculateScore() {
-	if (game.status !== 'done') {
-		return {};
-	}
-
 	var response = {};
 	var players = game.players;
 	for (var key in players) {
@@ -185,7 +181,7 @@ function startGame() {
 function initNewDeck() {
 	var resp = [];
 
-	for (var i = 3; i <= 35; i++) {
+	for (var i = 3; i <= 5; i++) {
 		resp.push(i);
 	}
 	return shuffle(resp);

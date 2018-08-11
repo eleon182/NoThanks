@@ -12,7 +12,8 @@ new Vue({
 		players: '',
 		username: null,
 		usernameInput: null,
-		playerCount: 0,
+		winner: '',
+		playerCount: 0,		
 		yourCoins: 0,
 		game: {}
 	},

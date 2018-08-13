@@ -61,6 +61,7 @@ new Vue({
 			for (var key in this.game.score) {
 				if (this.game.score[key] < min) {
 					this.winner = key;
+					min = this.game.score[key];
 				}
 			}
 		},

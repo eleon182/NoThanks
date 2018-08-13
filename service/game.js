@@ -59,7 +59,9 @@ function takeTurn(name, action) {
 	if (action === 'take') {
 		game.turn++;
 		game.players[name].cards.push(game.shownCard);
-		game.players[name].cards.sort(function(a, b){return a - b});
+		game.players[name].cards.sort(function(a, b) {
+			return a - b
+		});
 		game.players[name].coins += game.pot;
 		game.pot = 0;
 		game.shownCard = false;
@@ -184,7 +186,12 @@ function initNewDeck() {
 	for (var i = 3; i <= 35; i++) {
 		resp.push(i);
 	}
-	return shuffle(resp);
+
+	resp = shuffle(resp);
+	resp = lo.tail(resp);
+	resp = lo.tail(resp);
+	resp = lo.tail(resp);
+	return resp;
 }
 
 function addNewPlayer(name) {

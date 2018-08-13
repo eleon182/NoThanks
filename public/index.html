@@ -55,10 +55,10 @@
 										<button v-on:click="startGame" class="btn btn-primary btn-outline-secondary" type="button">Start game</button>
 									</li>
 									<li class="nav-item" v-if="game.status !== 'initial'">
-										<button v-on:click="initGame" class="btn btn-danger btn-outline-secondary" type="button">Restart game</button>
+										<button v-on:click="initGame" class="btn btn-danger btn-outline-secondary" type="button">Restart</button>
 									</li>
 									<li class="nav-item" v-if="showJoinButton">
-										<button v-on:click="joinGame" class="btn btn-primary btn-outline-secondary" type="button">Join game</button>
+										<button v-on:click="joinGame" class="btn btn-primary btn-outline-secondary" type="button">Join game!</button>
 									</li>
 								</ul>
 
@@ -113,7 +113,7 @@
 					</div>
 					<div v-if="username" class="col-12" id="">
 						<div class="jumbotron">
-							<h1 class="display-8">Players</h1>
+							<h1 class="display-8">Dashboard</h1>
 							<p class="lead"></p>
 							<hr class="my-4">
 							<b-alert v-if="game.shownCard" variant="secondary" show>Drawn card: {{game.shownCard || 'No card drawn'}}</b-alert>
@@ -125,8 +125,8 @@
 								<table class="table table-xs table-striped xtable-dark">
 									<thead class="thead-dark">
 										<tr>
-											<th scope="col">Player</th>
-											<th scope="col">Cards</th>
+											<th scope="col">Name</th>
+											<th scope="col">Hand</th>
 											<th scope="col">Score</th>
 										</tr>
 
@@ -151,7 +151,7 @@
 					</div>
 					<div v-if="username" class="col-12" id="">
 						<div class="jumbotron">
-							<h1 class="display-8">Game data</h1>
+							<h1 class="display-8">Statistics</h1>
 							<p class="lead"></p>
 							<hr class="my-4">
 							<div id="xsearch-grid">
@@ -174,7 +174,7 @@
 										<!--<td>{{item.serialNumber}}</td>-->
 										<!--</tr>-->
 										<tr>
-											<td>Cards remainging</td>
+											<td>Cards remaining</td>
 											<td>
 												<b-progress :value="game.remainingCards" :max="33" show-value animated></b-progress>
 											</td>

@@ -13,7 +13,7 @@ new Vue({
 		username: null,
 		usernameInput: null,
 		winner: '',
-		playerCount: 0,		
+		playerCount: 0,
 		yourCoins: 0,
 		game: {}
 	},
@@ -46,10 +46,23 @@ new Vue({
 					for (var key in self.game.players) {
 						self.playerCount++;
 					}
+					self.calculateWinner();
 				})
 				.catch(function(error) {
 					console.log(error);
 				})
+		},
+
+		calculateWinner: function() {
+			var self = this;
+			this.winner = '';
+
+			var min = 10000;
+			for (var key in this.game.score) {
+				if (this.game.score[key] < min) {
+					this.winner = key;
+				}
+			}
 		},
 		calculateOwnCoins: function() {
 			this.yourCoins = 0;

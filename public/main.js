@@ -8,6 +8,7 @@ new Vue({
 		showJoinButton: false,
 		showStartbutton: false,
 		players: '',
+		winner: '',
 		username: null,
 		usernameInput: null,
 		playerCount: 0,
@@ -49,10 +50,21 @@ new Vue({
 					console.log(error);
 				})
 		},
+		calculateWinner: function() {
+			var self = this;
+			this.winner = '';
+
+			var max = -100;
+			for (var key in this.game.score) {
+				if (this.game.score[key] > max) {
+					this.winner = key;
+				}
+			}
+		},
 		calculateOwnCoins: function() {
 			this.yourCoins = 0;
-			for(var key in this.game.players) {
-				if(this.username === key) {
+			for (var key in this.game.players) {
+				if (this.username === key) {
 					this.yourCoins = this.game.players[key].coins;
 				}
 			}

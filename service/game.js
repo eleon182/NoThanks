@@ -181,7 +181,7 @@ function startGame() {
 function initNewDeck() {
 	var resp = [];
 
-	for (var i = 3; i <= 5; i++) {
+	for (var i = 3; i <= 35; i++) {
 		resp.push(i);
 	}
 	return shuffle(resp);
